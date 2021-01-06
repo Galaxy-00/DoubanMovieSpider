@@ -9,7 +9,7 @@ class MovieParser(object):
         self.__html_doc = None
         self.__pq_doc = None
 
-    def set_html(self, html: str, douban_id: str) -> None:
+    def set_html(self, html: str, douban_id: str):
         '''
         设置解析器的html
         :param html: 豆瓣电影页面的html
@@ -18,6 +18,8 @@ class MovieParser(object):
         self.__html_doc = html
         self.__pq_doc = pq(self.__html_doc)
         self.__movie_info['douban_id'] = douban_id
+        
+        return self
 
     def __get_title(self) -> None:
         try:

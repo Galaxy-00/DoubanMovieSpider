@@ -1,9 +1,10 @@
 import requests
 from retrying import retry
+from aiohttp.client import ClientSession
 from constants import HEADERS, USE_PROXY
 
 
-class DoubanSpider(object):
+class AsyncDoubanSpider(object):
     def __init__(self) -> None:
         self.headers = HEADERS
         self.movieQueryUrl = "https://movie.douban.com/j/new_search_subjects?sort={sortType}&range={rateRange}&tags={tags}&start={start}&genres={geners}&countries={countries}&year_range={year_range}"
@@ -12,12 +13,17 @@ class DoubanSpider(object):
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
            wait_random_max=1500)
-    def __crawl(self, url: str) -> str:
+    async def __crawl(self, url: str) -> str:
         '''
         爬取url页面, 返回获取的内容
         :param url: url
         '''
-        return requests.get(url, headers=self.headers).text
+        try:
+            async with ClientSession() as session:
+                async with session.get(url, headers=self.headers) as res:
+                    return await res.text()
+        except:
+            pass
 
     def __get_proxy(self) -> dict:
         '''
@@ -32,23 +38,28 @@ class DoubanSpider(object):
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
            wait_random_max=1500)
-    def __crawl_proxy(self, url: str) -> str:
+    async def __crawl_proxy(self, url: str) -> str:
         '''
         爬取url页面, 返回获取的内容, 使用代理
         :param url: url
         '''
-        return requests.get(url,
-                            headers=self.headers,
-                            proxies=self.__get_proxy()).text
+        try:
+            async with ClientSession() as session:
+                async with session.get(url,
+                                       headers=self.headers,
+                                       proxies=self.__get_proxy()) as res:
+                    return await res.text()
+        except:
+            pass
 
-    def getMovieInfoByParams(self,
-                             sortType: str = "U",
-                             rateRange: str = "0,10",
-                             start: str = "0",
-                             tags: str = "",
-                             geners: str = "",
-                             countries: str = "",
-                             year_range: str = "") -> str:
+    async def getMovieInfoByParams(self,
+                                   sortType: str = "U",
+                                   rateRange: str = "0,10",
+                                   start: str = "0",
+                                   tags: str = "",
+                                   geners: str = "",
+                                   countries: str = "",
+                                   year_range: str = "") -> str:
         '''
         根据参数获取电影数据
         :param sortType: 电影数据的排序方式, U近期热门 T标记最多 S评分最高 R最新上映 
@@ -59,7 +70,6 @@ class DoubanSpider(object):
         :param countries: 地区, 例如中国大陆 欧美 美国 中国香港 中国台湾 日本 韩国 英国 法国 德国 意大利 西班牙 印度 泰国 俄罗斯 伊朗 加拿大 澳大利亚 爱尔兰 瑞典 巴西 丹麦
         :param years_range: 电影上映的时间区间, 例如2010,2019
         '''
-
         url = self.movieQueryUrl.format(sortType=sortType,
                                         rateRange=rateRange,
                                         start=start,
@@ -67,12 +77,14 @@ class DoubanSpider(object):
                                         geners=geners,
                                         countries=countries,
                                         year_range=year_range)
-        return self.__crawl_proxy(url) if USE_PROXY else self.__crawl(url)
+        return await self.__crawl_proxy(url) if USE_PROXY else await self.__crawl(
+            url)
 
-    def getMovieRawPage(self, id: str) -> str:
+    async def getMovieRawPage(self, id: str) -> str:
         '''
         根据豆瓣电影id获取所属页面html
         :param id: 豆瓣电影id
         '''
         url = self.moviePage.format(id=id)
-        return self.__crawl_proxy(url) if USE_PROXY else self.__crawl(url)
+        return await self.__crawl_proxy(url) if USE_PROXY else await self.__crawl(
+            url)
