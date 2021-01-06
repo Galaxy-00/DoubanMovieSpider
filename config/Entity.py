@@ -1,0 +1,21 @@
+movie = {
+    'douban_id': 0,
+    'title': '',
+    'year': '',
+    'directors': '',
+    'scriptwriters': '',
+    'actors': '',
+    'types': '',
+    'release_region': '',
+    'languages': '',
+    'release_date': '',
+    'rate': 0.0,
+    'rate_num':'',
+    '1star': '',
+    '2star': '',
+    '3star': '',
+    '4star': '',
+    '5star': '',
+    'shortCommentNum': '',
+    'showCommentNum': ''
+}
