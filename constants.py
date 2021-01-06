@@ -5,7 +5,7 @@ CSV_FILE_NAME = "douban_movies.csv"
 
 # 爬取电影数据参数
 START_RANGE = 0  # 开始爬取电影的偏移量
-END_RANGE = 100  # 爬取电影的数量
+END_RANGE = 500  # 爬取电影的数量
 SORT_TYPE = "U"  # 电影数据的排序方式, U近期热门 T标记最多 S评分最高 R最新上映
 RATE_RANGE = "0,10"  # 电影数据评分的区间, 默认0-10分
 TAGS = ""  # 电影特色, 例如 经典 青春 文艺 搞笑 励志 魔幻等
@@ -14,4 +14,4 @@ COUNTRIES = ""  # 地区, 例如 中国大陆 欧美 美国 中国香港 中国�
 YEAR_RANGES = ""  # 电影上映的时间区间, 例如"2010,2019"
 
 # 爬取间隔时间
-SLEEP_TIME = 0.2
+SLEEP_TIME = 1

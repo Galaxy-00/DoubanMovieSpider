@@ -10,12 +10,12 @@ movie = {
     'languages': '',
     'release_date': '',
     'rate': 0.0,
-    'rate_num':'',
+    'rate_num': 0,
     '1star': '',
     '2star': '',
     '3star': '',
     '4star': '',
     '5star': '',
-    'shortCommentNum': '',
-    'showCommentNum': ''
+    'shortCommentNum': 0,
+    'showCommentNum': 0
 }
