@@ -25,10 +25,10 @@ def linear_crawl(douban_spider: DoubanSpider, page_parser: MovieParser,
             # print(res)
             movies_data = json.loads(res)['data']
             for single_movie in movies_data:  # 遍历这20个数据
-                douban_id = single_movie['id']  # 获取对应电影的豆瓣id
+                douban_id = single_movie['id']  # 获取对应影剧的豆瓣id
                 print('Num {}: crawling movie id: {}'.format(
                     count, douban_id))
-                html = douban_spider.getMovieRawPage(douban_id)  # 获取相应电影的页面
+                html = douban_spider.getMovieRawPage(douban_id)  # 获取相应影剧的页面
                 movie_dict = page_parser.set_html(
                     html, douban_id).parser_html()  # 设置解析器并解析
                 store_helper.write_row(movie_dict.values())  # 存储到csv文件中
@@ -52,10 +52,10 @@ async def async_crawl(asy_douban_spider: AsyncDoubanSpider,
             start=start))['data']
 
         for single_movie in movies_data:  # 遍历这20个数据
-            douban_id = single_movie['id']  # 获取对应电影的豆瓣id
+            douban_id = single_movie['id']  # 获取对应影剧的豆瓣id
             print('crawling movie id: {}'.format(douban_id))
             html = await asy_douban_spider.getMovieRawPage(douban_id
-                                                           )  # 获取相应电影的页面
+                                                           )  # 获取相应影剧的页面
             movie_dict = page_parser.set_html(
                 html, douban_id).parser_html()  # 设置解析器并解析
             store_helper.write_row(movie_dict.values())  # 存储到csv文件中

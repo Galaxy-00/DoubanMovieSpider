@@ -12,8 +12,8 @@ class MovieParser(object):
     def set_html(self, html: str, douban_id: str):
         '''
         设置解析器的html
-        :param html: 豆瓣电影页面的html
-        :param douban_id: 豆瓣电影对应的id
+        :param html: 豆瓣影剧页面的html
+        :param douban_id: 豆瓣影剧对应的id
         '''
         self.__html_doc = html
         self.__pq_doc = pq(self.__html_doc)
@@ -131,7 +131,7 @@ class MovieParser(object):
 
     def parser_html(self) -> dict:
         '''
-        解析电影页面的html, 并返回对应的数据, 格式dict
+        解析影剧页面的html, 并返回对应的数据, 格式dict
         '''
         self.__get_title()
         self.__get_year()
