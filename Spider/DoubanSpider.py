@@ -1,13 +1,12 @@
+from Spider.Spider import Spider
 import requests
 from retrying import retry
-from settings import HEADERS, USE_PROXY, PROXY_URL
+from settings import USE_PROXY
 
 
-class DoubanSpider(object):
+class DoubanSpider(Spider):
     def __init__(self) -> None:
-        self.headers = HEADERS
-        self.movieQueryUrl = "https://movie.douban.com/j/new_search_subjects?type=movie&sort={sortType}&range={rateRange}&tags={tags}&start={start}&genres={geners}&countries={countries}&year_range={year_range}"
-        self.moviePage = "https://movie.douban.com/subject/{id}/"
+        super().__init__()
 
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
@@ -17,16 +16,7 @@ class DoubanSpider(object):
         爬取url页面, 返回获取的内容
         :param url: url
         '''
-        return requests.get(url, headers=self.headers).text
-
-    def __get_proxy(self) -> dict:
-        '''
-        返回一个代理
-        '''
-        proxy = requests.get(PROXY_URL).text
-        proxies = {"https": "https://" + proxy, "http": "http://" + proxy}
-        print(proxies)
-        return proxies
+        return requests.get(url, headers=self.get_random_header()).text
 
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
@@ -37,8 +27,8 @@ class DoubanSpider(object):
         :param url: url
         '''
         return requests.get(url,
-                            headers=self.headers,
-                            proxies=self.__get_proxy()).text
+                            headers=self.get_random_header(),
+                            proxies=self.get_proxy()).text
 
     def getMovieInfoByParams(self,
                              sortType: str = "U",

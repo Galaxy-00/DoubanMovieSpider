@@ -1,14 +1,12 @@
-import requests
+from Spider.Spider import Spider
 from retrying import retry
 from aiohttp.client import ClientSession
-from settings import HEADERS, USE_PROXY, PROXY_URL
+from settings import USE_PROXY
 
 
-class AsyncDoubanSpider(object):
+class AsyncDoubanSpider(Spider):
     def __init__(self) -> None:
-        self.headers = HEADERS
-        self.movieQueryUrl = "https://movie.douban.com/j/new_search_subjects?sort={sortType}&range={rateRange}&tags={tags}&start={start}&genres={geners}&countries={countries}&year_range={year_range}"
-        self.moviePage = "https://movie.douban.com/subject/{id}/"
+        super().__init__()
 
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
@@ -20,19 +18,11 @@ class AsyncDoubanSpider(object):
         '''
         try:
             async with ClientSession() as session:
-                async with session.get(url, headers=self.headers) as res:
+                async with session.get(
+                        url, headers=self.get_random_header()) as res:
                     return await res.text()
         except:
             pass
-
-    def __get_proxy(self) -> dict:
-        '''
-        返回一个代理
-        '''
-        proxy = requests.get(PROXY_URL).text
-        proxies = {"https": "https://" + proxy, "http": "http://" + proxy}
-        print(proxies)
-        return proxies
 
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
@@ -45,8 +35,8 @@ class AsyncDoubanSpider(object):
         try:
             async with ClientSession() as session:
                 async with session.get(url,
-                                       headers=self.headers,
-                                       proxies=self.__get_proxy()) as res:
+                                       headers=self.get_random_header(),
+                                       proxies=self.get_proxy()) as res:
                     return await res.text()
         except:
             pass
