@@ -3,7 +3,7 @@ from Spider import DoubanSpider
 from Spider import AsyncDoubanSpider
 from PageParser import MovieParser
 from StoreHelper import CsvHelper
-from constants import *
+from settings import *
 from time import sleep
 import json
 import asyncio

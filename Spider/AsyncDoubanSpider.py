@@ -1,7 +1,7 @@
 import requests
 from retrying import retry
 from aiohttp.client import ClientSession
-from constants import HEADERS, USE_PROXY
+from settings import HEADERS, USE_PROXY
 
 
 class AsyncDoubanSpider(object):

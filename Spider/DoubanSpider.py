@@ -1,6 +1,6 @@
 import requests
 from retrying import retry
-from constants import HEADERS, USE_PROXY
+from settings import HEADERS, USE_PROXY
 
 
 class DoubanSpider(object):
