@@ -35,7 +35,7 @@ def linear_crawl(douban_spider: DoubanSpider, page_parser: MovieParser,
                 count += 1
                 sleep(SLEEP_TIME)  # sleep
     except JSONDecodeError:
-        print('Error: Json解析错误, 可能是豆瓣暂时ban了ip, 请设置COOKIE')
+        print('Error: Json解析错误, 可能是豆瓣暂时ban了ip, 请设置COOKIES')
 
 
 async def async_crawl(asy_douban_spider: AsyncDoubanSpider,
@@ -60,7 +60,7 @@ async def async_crawl(asy_douban_spider: AsyncDoubanSpider,
                 html, douban_id).parser_html()  # 设置解析器并解析
             store_helper.write_row(movie_dict.values())  # 存储到csv文件中
     except JSONDecodeError:
-        print('Error: Json解析错误, 可能是豆瓣暂时ban了ip, 请设置COOKIE')
+        print('Error: Json解析错误, 可能是豆瓣暂时ban了ip, 请设置COOKIES')
 
 
 def main():
