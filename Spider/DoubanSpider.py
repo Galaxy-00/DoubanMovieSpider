@@ -1,7 +1,8 @@
-from Spider.Spider import Spider
 import requests
 from retrying import retry
 from settings import USE_PROXY
+
+from Spider.Spider import Spider
 
 
 class DoubanSpider(Spider):

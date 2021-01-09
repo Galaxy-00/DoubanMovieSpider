@@ -1,5 +1,6 @@
-from config import Entity
 import csv
+
+from config import Entity
 
 
 class CsvHelper:

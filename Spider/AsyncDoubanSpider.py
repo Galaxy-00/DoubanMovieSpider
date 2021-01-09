@@ -1,7 +1,8 @@
-from Spider.Spider import Spider
-from retrying import retry
 from aiohttp.client import ClientSession
+from retrying import retry
 from settings import USE_PROXY
+
+from Spider.Spider import Spider
 
 
 class AsyncDoubanSpider(Spider):

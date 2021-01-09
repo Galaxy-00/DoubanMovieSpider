@@ -1,6 +1,7 @@
+import re
+
 from config import Entity
 from pyquery import PyQuery as pq
-import re
 
 
 class MovieParser(object):
@@ -18,7 +19,7 @@ class MovieParser(object):
         self.__html_doc = html
         self.__pq_doc = pq(self.__html_doc)
         self.__movie_info['douban_id'] = douban_id
-        
+
         return self
 
     def __get_title(self) -> None:
@@ -26,21 +27,21 @@ class MovieParser(object):
             self.__movie_info['title'] = self.__pq_doc.find(
                 'span[property="v:itemreviewed"]').text()
         except:
-            pass
+            self.__movie_info['title'] = ''
 
     def __get_year(self) -> None:
         try:
             res = self.__pq_doc.find('.year').text()
             self.__movie_info['year'] = re.search(r'\((.*)\)', res).group(1)
         except:
-            pass
+            self.__movie_info['year'] = ''
 
     def __get_directors(self) -> None:
         try:
             self.__movie_info['directors'] = self.__pq_doc.find(
                 'a[rel="v:directedBy"]').text().replace(' ', ' / ')
         except:
-            pass
+            self.__movie_info['directors'] = ''
 
     def __get_script_writers(self) -> None:
         try:
@@ -49,21 +50,21 @@ class MovieParser(object):
                 self.__html_doc).group(0)
             self.__movie_info['scriptwriters'] = pq(res).find('.attrs').text()
         except:
-            pass
+            self.__movie_info['scriptwriters'] = ''
 
     def __get_actors(self) -> None:
         try:
             self.__movie_info['actors'] = self.__pq_doc.find(
                 '.actor .attrs').text()
         except:
-            pass
+            self.__movie_info['actors'] = ''
 
     def __get_types(self) -> None:
         try:
             self.__movie_info['types'] = self.__pq_doc.find(
                 'span[property="v:genre"]').text().replace(' ', ' / ')
         except:
-            pass
+            self.__movie_info['types'] = ''
 
     def __get_release_region(self) -> None:
         try:
@@ -71,7 +72,7 @@ class MovieParser(object):
                             self.__html_doc).group(1)
             self.__movie_info['release_region'] = res
         except:
-            pass
+            self.__movie_info['release_region'] = ''
 
     def __get_languages(self) -> None:
         try:
@@ -79,28 +80,28 @@ class MovieParser(object):
                             self.__html_doc).group(1)
             self.__movie_info['languages'] = res
         except:
-            pass
+            self.__movie_info['languages'] = ''
 
     def __get_release_date(self) -> None:
         try:
             self.__movie_info['release_date'] = self.__pq_doc.find(
                 'span[property="v:initialReleaseDate"]').text()
         except:
-            pass
+            self.__movie_info['release_data'] = ''
 
     def __get_rate(self) -> None:
         try:
             self.__movie_info['rate'] = self.__pq_doc.find(
                 'strong[property="v:average"]').text()
         except:
-            pass
+            self.__movie_info['rate'] = ''
 
     def __get_rate_num(self) -> None:
         try:
             self.__movie_info['rate_num'] = self.__pq_doc.find(
                 'span[property="v:votes"]').text()
         except:
-            pass
+            self.__movie_info['rate_num'] = ''
 
     def __get_star_pre(self) -> None:
         try:
@@ -111,7 +112,8 @@ class MovieParser(object):
                     '.rating_per').text()
                 star -= 1
         except:
-            pass
+            for star in range(1, 5):
+                self.__movie_info["{}star".format(star)] = ''
 
     def __get_short_comment_num(self) -> None:
         try:
@@ -119,7 +121,7 @@ class MovieParser(object):
             self.__movie_info['shortCommentNum'] = re.search(r'([0-9]+)',
                                                              res).group(0)
         except:
-            pass
+            self.__movie_info['shortCommentNum'] = ''
 
     def __get_show_comment_num(self) -> None:
         try:
@@ -127,7 +129,7 @@ class MovieParser(object):
             self.__movie_info['showCommentNum'] = re.search(r'([0-9]+)',
                                                             res).group(0)
         except:
-            pass
+            self.__movie_info['showCommentNum'] = ''
 
     def parser_html(self) -> dict:
         '''
