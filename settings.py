@@ -5,7 +5,7 @@ CSV_FILE_NAME = 'raw_data_douban_movies.csv'
 
 # 爬取影剧数据参数
 START_RANGE = 0 # 开始爬取偏移量
-END_RANGE = 20 # 结束爬取偏移, 开始与结束差值最好为20的整数倍
+END_RANGE = 100 # 结束爬取偏移, 开始与结束差值最好为20的整数倍
 SORT_TYPE = 'U'  # 数据的排序方式, U近期热门 T标记最多 S评分最高 R最新上映
 RATE_RANGE = '0,10'  # 数据评分的区间, 默认0-10分
 TAGS = '电影'  # 特色, 例如 经典 青春 文艺 搞笑 励志 魔幻等
@@ -26,10 +26,10 @@ IS_ASYNC = False
 USE_PROXY = False
 # 使用http代理, 以及代理池的地址
 USE_HTTP_PROXY = False
-PROXY_URL = 'http://localhost:5555/random'
+PROXY_URL = 'http://127.0.0.1:5555/random'
 # 使用socket代理以及socket地址及端口
 USE_SOCKET = False
-SOCKET_URL = 'localhost:9150'
+SOCKET_URL = '127.0.0.1:9150'
 
 # 搜索引擎（SEO爬虫）的请求头
 USER_AGENT = [
