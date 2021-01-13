@@ -30,14 +30,17 @@ class Spider(object):
         '''
         返回一个代理
         '''
-        proxies = {}
-        if USE_HTTP_PROXY:
-            proxy = requests.get(PROXY_URL).text
-            proxies = {"https": "https://" + proxy, "http": "http://" + proxy}
-        if USE_SOCKET:
-            proxies = {
-                "https": "socks5://" + SOCKET_URL,
-                "http": "socks5://" + SOCKET_URL
-            }
-        print('Using proxy: {}'.format(proxies))
-        return proxies
+        try:
+            proxies = {}
+            if USE_HTTP_PROXY:
+                proxy = requests.get(PROXY_URL).text
+                proxies = {"https": "https://" + proxy, "http": "http://" + proxy}
+            if USE_SOCKET:
+                proxies = {
+                    "https": "socks5://" + SOCKET_URL,
+                    "http": "socks5://" + SOCKET_URL
+                }
+            print('Using proxy: {}'.format(proxies))
+            return proxies
+        except:
+            return {}

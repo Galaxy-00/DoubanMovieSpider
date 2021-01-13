@@ -23,7 +23,7 @@ class AsyncDoubanSpider(Spider):
                         url, headers=self.get_random_header()) as res:
                     return await res.text()
         except:
-            pass
+            return None
 
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
@@ -40,7 +40,7 @@ class AsyncDoubanSpider(Spider):
                                        proxies=self.get_proxy()) as res:
                     return await res.text()
         except:
-            pass
+            return None
 
     async def getMovieInfoByParams(self,
                                    sortType: str = "U",

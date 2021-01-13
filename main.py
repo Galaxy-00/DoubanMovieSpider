@@ -92,7 +92,7 @@ async def async_crawl(asy_douban_spider: Spider.Spider,
 
 def main():
     page_parser = MovieParser.MovieParser()  # 解析器
-    csv_helper = CsvHelper.CsvHelper(CSV_FILE_NAME)  # 存储器
+    csv_helper = CsvHelper.CsvHelper(FILE_NAME)  # 存储器
     douban_spider = DoubanSpider.DoubanSpider()  # 爬虫
     asy_douban_spider = AsyncDoubanSpider.AsyncDoubanSpider()  # 异步爬虫
 

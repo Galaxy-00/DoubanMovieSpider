@@ -1,7 +1,8 @@
 # 参数文件
 
 # csv文件存储文件名
-CSV_FILE_NAME = 'raw_data_douban_movies.csv'
+STORE_PATH = './data/'
+FILE_NAME = STORE_PATH + 'raw_data_douban_movies.csv'
 
 # 爬取影剧数据参数
 START_RANGE = 0 # 开始爬取偏移量

@@ -11,12 +11,15 @@ class CsvHelper:
         初始化csv writer
         :param filename: 存储csv的文件名
         '''
-        self._csv_file = open(filename, 'w', newline='')
-        self._writer = csv.writer(self._csv_file,
-                                  delimiter=',',
-                                  quotechar='"',
-                                  quoting=csv.QUOTE_MINIMAL)
-        self._writer.writerow(CsvHelper.columns)
+        try:
+            self._csv_file = open(filename, 'w', newline='')
+            self._writer = csv.writer(self._csv_file,
+                                      delimiter=',',
+                                      quotechar='"',
+                                      quoting=csv.QUOTE_MINIMAL)
+            self._writer.writerow(CsvHelper.columns)
+        except Exception as e:
+            print(e)
 
     def write_row(self, line: str) -> None:
         '''

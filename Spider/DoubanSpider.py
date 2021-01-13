@@ -17,7 +17,10 @@ class DoubanSpider(Spider):
         爬取url页面, 返回获取的内容
         :param url: url
         '''
-        return requests.get(url, headers=self.get_random_header()).text
+        try:
+            return requests.get(url, headers=self.get_random_header()).text
+        except:
+            return None
 
     @retry(stop_max_attempt_number=3,
            wait_random_min=600,
@@ -27,9 +30,12 @@ class DoubanSpider(Spider):
         爬取url页面, 返回获取的内容, 使用代理
         :param url: url
         '''
-        return requests.get(url,
+        try:
+            return requests.get(url,
                             headers=self.get_random_header(),
                             proxies=self.get_proxy()).text
+        except:
+            return None
 
     def getMovieInfoByParams(self,
                              sortType: str = "U",
